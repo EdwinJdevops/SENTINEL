@@ -1,0 +1,45 @@
+name: SENTINEL Security Scan
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  trivy-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Trivy Image Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: nginx:latest
+          format: json
+          output: trivy-results.json
+          scanners: vuln
+          vuln-type: os
+
+      - name: Upload Trivy Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-results
+          path: trivy-results.json
+
+  kubescape-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Kubescape
+        run: curl -s https://raw.githubusercontent.com/kubescape/kubescape/master/install.sh | /bin/bash
+
+      - name: Kubescape Scan
+        run: kubescape scan --format json --output kubescape-results.json || true
+
+      - name: Upload Kubescape Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: kubescape-results
+          path: kubescape-results.json
