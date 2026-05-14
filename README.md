@@ -7,3 +7,16 @@ Live security scanning pipeline: Trivy + Kubescape on k3s/minikube
 
 ## Stack
 k3s · Trivy · Kubescape · Falco · Python · GitHub Actions · Prometheus · Grafana · ArgoCD · Terraform
+
+## Architecture
+GitHub Push → GitHub Actions → Trivy Scan → Kubescape Scan
+↓              ↓
+trivy-results.json  kubescape-results.json
+↓
+Python Aggregator
+↓
+Unified Risk Report (CRITICAL/HIGH/MEDIUM)
+↓
+ArgoCD GitOps ← Prometheus ← Falco Runtime
+↓
+Grafana Dashboard
