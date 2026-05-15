@@ -20,3 +20,22 @@ Unified Risk Report (CRITICAL/HIGH/MEDIUM)
 ArgoCD GitOps ← Prometheus ← Falco Runtime
 ↓
 Grafana Dashboard
+
+## Architecture
+
+```mermaid
+graph TD
+    GH[GitHub Actions CI/CD] --> ARGO[ArgoCD]
+    ARGO --> K8S[Minikube Cluster]
+    K8S --> SEC[Security Namespace]
+    K8S --> MON[Monitoring Namespace]
+    SEC --> TRIVY[Trivy Scanner]
+    SEC --> KUBESCAPE[Kubescape]
+    SEC --> FALCO[Falco Runtime]
+    MON --> PROM[Prometheus]
+    MON --> GRAF[Grafana]
+    TRIVY --> AGG[Python Aggregator]
+    KUBESCAPE --> AGG
+    FALCO --> AGG
+    AGG --> PROM
+```
