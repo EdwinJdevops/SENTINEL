@@ -36,30 +36,18 @@ graph TD
     KUBESCAPE --> AGG
     FALCO --> AGG
     AGG --> PROM
-```
-
----
-
-## Security Findings
-
-### Kubescape — MITRE ATT&CK Framework
-- **Overall Score: 80/100**
-- 10 failed controls across 101 resources
-- Critical flags: Anonymous Kubelet access, TLS enforcement
-- Medium flags: Secret encryption at rest, Audit logging, CoreDNS poisoning vectors
-
-### Trivy — CVE Scan
-- **Target:** nginx:latest
-- **Total CVEs: 0** — clean image baseline confirmed
-- JSON report: `scan-results/trivy-report.json`
-
----
-
-## Infrastructure — Terraform
-
+Security Findings
+Kubescape — MITRE ATT&CK Framework
+Overall Score: 80/100
+10 failed controls across 101 resources
+Critical flags: Anonymous Kubelet access, TLS enforcement
+Medium flags: Secret encryption at rest, Audit logging, CoreDNS poisoning vectors
+Trivy — CVE Scan
+Target: nginx:latest
+Total CVEs: 0 — clean image baseline confirmed
+JSON report: scan-results/trivy-report.json
+Infrastructure — Terraform
 Namespaces provisioned declaratively via Terraform Kubernetes provider:
-
-```hcl
 resource "kubernetes_namespace" "monitoring" {
   metadata { name = "monitoring" }
 }
@@ -69,31 +57,21 @@ resource "kubernetes_namespace" "security" {
 resource "kubernetes_namespace" "argocd" {
   metadata { name = "argocd" }
 }
-```
 
-```bash
 cd terraform
 terraform init
 terraform plan
 terraform apply
-```
 
----
+Stack
+Kubernetes: Minikube
+Security: Trivy, Kubescape, Falco
+Observability: Prometheus, Grafana
+GitOps: ArgoCD, GitHub Actions
+IaC: Terraform (Kubernetes provider)
+Aggregation: Python 3 (unified risk report parser)
+Local Setup
 
-## Stack
-
-- **Kubernetes:** Minikube
-- **Security:** Trivy, Kubescape, Falco
-- **Observability:** Prometheus, Grafana
-- **GitOps:** ArgoCD, GitHub Actions
-- **IaC:** Terraform (Kubernetes provider)
-- **Aggregation:** Python 3 (unified risk report parser)
-
----
-
-## Local Setup
-
-```bash
 # RAM fix required each session
 minikube delete
 systemctl restart docker
@@ -101,102 +79,15 @@ minikube start --driver=docker --force --memory=2200 --cpus=2
 
 # Grafana access
 kubectl port-forward -n monitoring svc/prometheus-grafana 3000:80
-```
 
----
-
-## Scan Results
-
-```bash
+Scan Results
 # Run CVE summary
 python3 scan-results/summarize.py
 
 # Re-run Kubescape
 kubescape scan framework mitre --format json --output scan-results/kubescape-report.json
-```
 
----
-
-## Repo Structure--
-
-## Security Findings
-
-### Kubescape — MITRE ATT&CK Framework
-- **Overall Score: 80/100**
-- 10 failed controls across 101 resources
-- Critical flags: Anonymous Kubelet access, TLS enforcement
-- Medium flags: Secret encryption at rest, Audit logging, CoreDNS poisoning vectors
-
-### Trivy — CVE Scan
-- **Target:** nginx:latest
-- **Total CVEs: 0** — clean image baseline confirmed
-- JSON report: `scan-results/trivy-report.json`
-
----
-
-## Infrastructure — Terraform
-
-Namespaces provisioned declaratively via Terraform Kubernetes provider:
-
-```hcl
-resource "kubernetes_namespace" "monitoring" {
-  metadata { name = "monitoring" }
-}
-resource "kubernetes_namespace" "security" {
-  metadata { name = "security" }
-}
-resource "kubernetes_namespace" "argocd" {
-  metadata { name = "argocd" }
-}
-```
-
-```bash
-cd terraform
-terraform init
-terraform plan
-terraform apply
-```
-
----
-
-## Stack
-
-- **Kubernetes:** Minikube
-- **Security:** Trivy, Kubescape, Falco
-- **Observability:** Prometheus, Grafana
-- **GitOps:** ArgoCD, GitHub Actions
-- **IaC:** Terraform (Kubernetes provider)
-- **Aggregation:** Python 3 (unified risk report parser)
-
----
-
-## Local Setup
-
-```bash
-# RAM fix required each session
-minikube delete
-systemctl restart docker
-minikube start --driver=docker --force --memory=2200 --cpus=2
-
-# Grafana access
-kubectl port-forward -n monitoring svc/prometheus-grafana 3000:80
-```
-
----
-
-## Scan Results
-
-```bash
-# Run CVE summary
-python3 scan-results/summarize.py
-
-# Re-run Kubescape
-kubescape scan framework mitre --format json --output scan-results/kubescape-report.json
-```
-
----
-
-## Repo Structure
+Repo Structure
 SENTINEL/
 ├── terraform/
 │   ├── main.tf
@@ -207,11 +98,7 @@ SENTINEL/
 │   ├── kubescape-report.json
 │   └── summarize.py
 └── README.md
-
----
-
-*Built by Edwin Jonathan — 17-year-old self-taught DevOps Engineer from Lagos, Nigeria. No degree, no shortcuts — just real infrastructure, real pipelines, and real results.*
-
-*🔗 GitHub: github.com/EdwinJdevops*
-*✍️ Hashnode: edwinjonathand-devops.hashnode.dev*
-*💼 Open to remote DevOps/Cloud roles globally*
+Built by Edwin Jonathan — 17-year-old self-taught DevOps Engineer from Lagos, Nigeria. No degree, no shortcuts — just real infrastructure, real pipelines, and real results.
+🔗 GitHub: github.com/EdwinJdevops
+✍️ Hashnode: edwinjonathand-devops.hashnode.dev
+💼 Open to remote DevOps/Cloud roles globally
