@@ -1,0 +1,78 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.70.0"
+  },
+  "ReportID": "019e2dc1-4eaa-7813-ae07-8c73db8d6457",
+  "CreatedAt": "2026-05-15T23:28:23.850535107+01:00",
+  "ArtifactID": "sha256:09c654322332d95b9abc6dece743104797454a3619b541b6b5fa2ce340627fe9",
+  "ArtifactName": "k8s.gcr.io/pause:3.9",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "Size": 745984,
+    "ImageID": "sha256:e6f1816883972d4be47bd48879a08919b96afcd344132622e4d444987919323c",
+    "DiffIDs": [
+      "sha256:e3e5579ddd43c08e4b5c74dc12941a4ef656fab070b1087a1fd5a8a836b71e7d"
+    ],
+    "RepoTags": [
+      "k8s.gcr.io/pause:3.9"
+    ],
+    "RepoDigests": [
+      "k8s.gcr.io/pause@sha256:7031c1b283388d2c2e09b57badb803c05ebed362dc88d84b480cc47f72a21097"
+    ],
+    "Reference": "k8s.gcr.io/pause:3.9",
+    "ImageConfig": {
+      "architecture": "amd64",
+      "created": "2022-10-13T18:35:41.370102426Z",
+      "history": [
+        {
+          "created": "2022-10-13T18:35:41.370102426Z",
+          "created_by": "ARG ARCH",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2022-10-13T18:35:41.370102426Z",
+          "created_by": "ADD bin/pause-linux-amd64 /pause # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2022-10-13T18:35:41.370102426Z",
+          "created_by": "USER 65535:65535",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2022-10-13T18:35:41.370102426Z",
+          "created_by": "ENTRYPOINT [\"/pause\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        }
+      ],
+      "os": "linux",
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:e3e5579ddd43c08e4b5c74dc12941a4ef656fab070b1087a1fd5a8a836b71e7d"
+        ]
+      },
+      "config": {
+        "Entrypoint": [
+          "/pause"
+        ],
+        "Env": [
+          "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        ],
+        "User": "65535:65535",
+        "WorkingDir": "/"
+      }
+    },
+    "Layers": [
+      {
+        "Size": 745984,
+        "Digest": "sha256:61fec91190a0bab34406027bbec43d562218df6e80d22d4735029756f23c7007",
+        "DiffID": "sha256:e3e5579ddd43c08e4b5c74dc12941a4ef656fab070b1087a1fd5a8a836b71e7d"
+      }
+    ]
+  }
+}
